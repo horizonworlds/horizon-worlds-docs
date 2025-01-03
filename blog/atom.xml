@@ -86,7 +86,10 @@
 </ul>
 </li>
 <li>
-<p><strong>Q:</strong>  What's the difference between using <code>this.variable.set</code> versus  <code>this.variable =</code> ? *   <strong>A:</strong> <code>set</code> sends information to other headsets, the assignment does not.</p>
+<p><strong>Q:</strong>  What's the difference between using <code>this.variable.set</code> versus  <code>this.variable =</code> ? *</p>
+<ul>
+<li><strong>A:</strong> <code>set</code> sends information to other headsets for that variable, while assignment will only modify the value locally. Properties and variables in Horizon Worlds require using set and get to properly sync the value.</li>
+</ul>
 </li>
 <li>
 <p><strong>Q:</strong> What are <code>EventSubscriptions</code>?</p>
@@ -95,21 +98,9 @@
 </ul>
 </li>
 <li>
-<p><strong>Q:</strong> What's the difference between <code>Number</code> and <code>number</code>?</p>
-<ul>
-<li><strong>A:</strong> <code>number</code> is the primitive data type while <code>Number</code> is an object wrapper for it, avoid capitalized versions.</li>
-</ul>
-</li>
-<li>
 <p><strong>Q:</strong> Why am I getting a "Cannot read properties of undefined" error when using the <code>as()</code> method?</p>
 <ul>
-<li><strong>A:</strong> Use the methods correctly. Example:  <code>this.props.myTrigger.as(hz.TriggerGizmo).&lt;my stuff&gt;</code></li>
-</ul>
-</li>
-<li>
-<p><strong>Q:</strong> Why is my leaderboard not updating when I call setScoreForPlayer</p>
-<ul>
-<li><strong>A:</strong> Make sure you are listening for the <code>OnItemConsumeComplete</code> event. The event <code>OnPlayerConsumeSucceeded</code> is deprecated.</li>
+<li><strong>A:</strong> Use the methods correctly. Example:  <code>this.props.myTrigger.as(hz.TriggerGizmo).&lt;my stuff&gt;</code> . Also, use the proper "type".</li>
 </ul>
 </li>
 <li>
@@ -121,25 +112,13 @@
 <li>
 <p><strong>Q:</strong> Why doesn't my codeblock event send a message to my Typescript component?</p>
 <ul>
-<li><strong>A:</strong> The type definition of the codeblock event must match the TS definition. A code block event with type <code>string</code> is not compatible with  <code>{ newStatus: string }</code>.</li>
+<li><strong>A:</strong> The type definition of the codeblock event must match the TS definition. A code block event with type <code>string</code> is not compatible with a TS event that expects an object such as <code>{ newStatus: string }</code>.</li>
 </ul>
 </li>
 <li>
 <p><strong>Q:</strong> What is the correct way to define a local event with a string as an argument?</p>
 <ul>
 <li><strong>A:</strong> You cannot, local events take an object as argument. This is why they are structured as such <code>LocalEvent&lt;{ newStatus: string }&gt;</code></li>
-</ul>
-</li>
-<li>
-<p><strong>Q:</strong>  What is a <code>deltaTime</code>?</p>
-<ul>
-<li><strong>A:</strong> It is the time that passed since the last frame, is given in seconds.</li>
-</ul>
-</li>
-<li>
-<p><strong>Q:</strong>  Why are my leaderboards not working with file backed scripts?</p>
-<ul>
-<li><strong>A:</strong>  File-backed scripts shouldn't be the cause of this.</li>
 </ul>
 </li>
 <li>
@@ -152,12 +131,6 @@
 <p><strong>Q:</strong> Can you get device rotation?</p>
 <ul>
 <li><strong>A:</strong> No API for it yet.</li>
-</ul>
-</li>
-<li>
-<p><strong>Q:</strong> How do I install TS on a Mac?</p>
-<ul>
-<li><strong>A:</strong> The desktop editor is not supported on Mac, use the web editor at <a href="https://horizon.meta.com/creator/" target="_blank" rel="noopener noreferrer">https://horizon.meta.com/creator/</a> or a VM running Windows.</li>
 </ul>
 </li>
 <li>
@@ -215,12 +188,6 @@
 </ul>
 </li>
 <li>
-<p><strong>Q:</strong> Is there a way to rename codeblocks outside of edit mode?</p>
-<ul>
-<li><strong>A:</strong> Yes, by saving it as a temp and re-importing with new name.</li>
-</ul>
-</li>
-<li>
 <p><strong>Q:</strong> How do I make an object rotate smoothly over time?</p>
 <ul>
 <li><strong>A:</strong> Must calculate the correct rotation and duration over time and update every frame.</li>
@@ -239,21 +206,15 @@
 </ul>
 </li>
 <li>
-<p><strong>Q:</strong> I am getting this error "cannot instantiate missing TS component (scriptname)". Why?</p>
-<ul>
-<li><strong>A:</strong> Your script is likely not set to <code>local</code>, or has compilation errors.</li>
-</ul>
-</li>
-<li>
 <p><strong>Q:</strong>  When an item is grabbed I am setting a camera view, but it says the <code>typescript</code> is missing.</p>
 <ul>
 <li><strong>A:</strong> Need to make the script <code>local</code>, and import the necessary module, as well as use the method <code>as()</code>, not the keyword <code>as</code>. <code>this.props.raycastEntity.as(hz.RaycastGizmo);</code></li>
 </ul>
 </li>
 <li>
-<p><strong>Q:</strong> Can you do a dig or axe animation on mobile and web without typescript?</p>
+<p><strong>Q:</strong> How do I get a player's Persistent variables?</p>
 <ul>
-<li><strong>A:</strong> You can simulate axe but not dig, and you can do this from codeblocks. Set sword pose and then fire animation.</li>
+<li><strong>A:</strong> Use <code>this.world.persistentStorage.getPlayerVariable(player, "group:variable")</code></li>
 </ul>
 </li>
 <li>
@@ -302,12 +263,6 @@
 <p><strong>Q:</strong> How can I do multiple actions based on a single trigger?</p>
 <ul>
 <li><strong>A:</strong> You can use the action as a callback to other functions.</li>
-</ul>
-</li>
-<li>
-<p><strong>Q:</strong> Why is my custom UI not updating?</p>
-<ul>
-<li><strong>A:</strong>  You probably are not using per-player bindings in your UI.</li>
 </ul>
 </li>
 <li>
