@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkhorizonworlds=self.webpackChunkhorizonworlds||[]).push([[121],{8070:s=>{s.exports=JSON.parse('{"tags":[{"label":"Typescript","permalink":"/blog/tags/typescript","count":1},{"label":"FAQ","permalink":"/blog/tags/faq","count":1}]}')}}]);

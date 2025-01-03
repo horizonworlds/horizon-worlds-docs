@@ -2,108 +2,825 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://horizonworlds.wiki/blog</id>
     <title>Horizon Worlds Wiki Blog</title>
-    <updated>2021-08-26T00:00:00.000Z</updated>
+    <updated>2025-01-02T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://horizonworlds.wiki/blog"/>
     <subtitle>Horizon Worlds Wiki Blog</subtitle>
     <icon>https://horizonworlds.wiki/img/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[Welcome]]></title>
-        <id>https://horizonworlds.wiki/blog/welcome</id>
-        <link href="https://horizonworlds.wiki/blog/welcome"/>
-        <updated>2021-08-26T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Docusaurus blogging features are powered by the blog plugin.]]></summary>
-        <content type="html"><![CDATA[<p><a href="https://docusaurus.io/docs/blog" target="_blank" rel="noopener noreferrer">Docusaurus blogging features</a> are powered by the <a href="https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-content-blog" target="_blank" rel="noopener noreferrer">blog plugin</a>.</p>
-<p>Here are a few tips you might find useful.</p>
-<p>Simply add Markdown files (or folders) to the <code>blog</code> directory.</p>
-<p>Regular blog authors can be added to <code>authors.yml</code>.</p>
-<p>The blog post date can be extracted from filenames, such as:</p>
+        <title type="html"><![CDATA[Meta Horizon Worlds TypeScript FAQ]]></title>
+        <id>https://horizonworlds.wiki/blog/typescript-faq</id>
+        <link href="https://horizonworlds.wiki/blog/typescript-faq"/>
+        <updated>2025-01-02T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[I. Getting Started & Setup]]></summary>
+        <content type="html"><![CDATA[<p><strong>I. Getting Started &amp; Setup</strong></p>
 <ul>
-<li><code>2019-05-30-welcome.md</code></li>
-<li><code>2019-05-30-welcome/index.md</code></li>
+<li><strong>Q:</strong> How do I install/use TypeScript for Horizon Worlds?<!-- -->
+<ul>
+<li><strong>A:</strong> You can use the web editor at <code>horizon.meta.com/creator/</code> or the desktop editor by installing the Meta Link desktop app.</li>
 </ul>
-<p>A blog post folder can be convenient to co-locate blog post images:</p>
-<p><img decoding="async" loading="lazy" alt="Docusaurus Plushie" src="https://horizonworlds.wiki/assets/images/docusaurus-plushie-banner-a60f7593abca1e3eef26a9afa244e4fb.jpeg" width="1500" height="500" class="img_ev3q"></p>
-<p>The blog supports tags as well!</p>
-<p><strong>And if you don't want a blog</strong>: just delete this directory, and use <code>blog: false</code> in your Docusaurus config.</p>]]></content>
+</li>
+<li><strong>Q:</strong> What should be in my <code>.gitignore</code> file?<!-- -->
+<ul>
+<li><strong>A:</strong>  <code>.editor</code>, <code>.vscode</code>, <code>types</code>, <code>package.json</code>, and <code>tsconfig.json</code>.</li>
+</ul>
+</li>
+<li><strong>Q:</strong> Is there a Mac version of the Desktop Editor?<!-- -->
+<ul>
+<li><strong>A:</strong>  No, you can use the web editor or a VM running Windows.</li>
+</ul>
+</li>
+<li><strong>Q:</strong> How do I find specific API details?<!-- -->
+<ul>
+<li><strong>A:</strong> Use the search bar at <a href="https://horizon.meta.com/resources/scripting-api/" target="_blank" rel="noopener noreferrer">https://horizon.meta.com/resources/scripting-api/</a> or use F12 to jump to the <code>d.ts</code> definition in VSCode.</li>
+</ul>
+</li>
+<li><strong>Q:</strong> How do I fix errors about a missing TS component?<!-- -->
+<ul>
+<li><strong>A:</strong> Ensure your component declaration is generic like this: <code>class MyComponent extends Component&lt;typeof MyComponent&gt; { ... }</code>.</li>
+</ul>
+</li>
+</ul>
+<p><strong>II. Core Concepts &amp; Syntax</strong></p>
+<ul>
+<li>
+<p><strong>Q:</strong> What's the difference between <code>Number</code> and <code>number</code>?</p>
+<ul>
+<li><strong>A:</strong> <code>number</code> is the primitive data type, <code>Number</code> is an object wrapper. Avoid capitalized versions of <code>Number</code>, <code>String</code>, and <code>Boolean</code>, etc.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What is <code>deltaTime</code>?</p>
+<ul>
+<li><strong>A:</strong>  It's the time, in seconds, since the previous <code>onUpdate</code> cycle, useful for smooth motion.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What does <code>thing.method.bind(thing)</code> do?</p>
+<ul>
+<li><strong>A:</strong> It ensures the <code>this</code> keyword refers to the correct object within the function. It can also be used for partially applying arguments.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> When do I need to use <code>func.bind(this)</code>?</p>
+<ul>
+<li><strong>A:</strong> Whenever you pass a function as an event handler, you need to bind it to keep the correct context. Or use the arrow function <code>() =&gt; this.myfunction()</code> which will do this binding for you.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> When are local and network events fired?</p>
+<ul>
+<li><strong>A:</strong> Local events run <em>immediately</em>. Network events run "as soon as it can, but not immediately". CodeblockEvents run next cycle.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What are the valid types for function parameters for local and network events?</p>
+<ul>
+<li><strong>A:</strong>  For Local and Network events you should use an object, as they all use json compatible format, ex. <code>new LocalEvent&lt;{myValue: number}&gt;</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  What is a "Local execution" vs "Default execution"?</p>
+<ul>
+<li><strong>A:</strong> Default means that the scripts runs on the server. Local means the script runs on the client that owns the entity. You must assign an owner to a local script for it to run locally. A default script cannot do that.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  What's the difference between using <code>this.variable.set</code> versus  <code>this.variable =</code> ? *   <strong>A:</strong> <code>set</code> sends information to other headsets, the assignment does not.</p>
+</li>
+<li>
+<p><strong>Q:</strong> What are <code>EventSubscriptions</code>?</p>
+<ul>
+<li><strong>A:</strong> They are returned by all <code>connect*()</code> calls and are used to <code>disconnect</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What's the difference between <code>Number</code> and <code>number</code>?</p>
+<ul>
+<li><strong>A:</strong> <code>number</code> is the primitive data type while <code>Number</code> is an object wrapper for it, avoid capitalized versions.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Why am I getting a "Cannot read properties of undefined" error when using the <code>as()</code> method?</p>
+<ul>
+<li><strong>A:</strong> Use the methods correctly. Example:  <code>this.props.myTrigger.as(hz.TriggerGizmo).&lt;my stuff&gt;</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Why is my leaderboard not updating when I call setScoreForPlayer</p>
+<ul>
+<li><strong>A:</strong> Make sure you are listening for the <code>OnItemConsumeComplete</code> event. The event <code>OnPlayerConsumeSucceeded</code> is deprecated.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Why doesn't <code>clearTimeout()</code> or <code>setTimeout</code> work?</p>
+<ul>
+<li><strong>A:</strong> Use <code>this.async.clearTimeout()</code> and <code>this.async.setTimeout()</code> instead of global versions in horizon.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Why doesn't my codeblock event send a message to my Typescript component?</p>
+<ul>
+<li><strong>A:</strong> The type definition of the codeblock event must match the TS definition. A code block event with type <code>string</code> is not compatible with  <code>{ newStatus: string }</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What is the correct way to define a local event with a string as an argument?</p>
+<ul>
+<li><strong>A:</strong> You cannot, local events take an object as argument. This is why they are structured as such <code>LocalEvent&lt;{ newStatus: string }&gt;</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  What is a <code>deltaTime</code>?</p>
+<ul>
+<li><strong>A:</strong> It is the time that passed since the last frame, is given in seconds.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  Why are my leaderboards not working with file backed scripts?</p>
+<ul>
+<li><strong>A:</strong>  File-backed scripts shouldn't be the cause of this.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  Are mobile inputs limited to using a GUI or can TS do swipes via touch position/delta?</p>
+<ul>
+<li><strong>A:</strong> You can use focused interaction mode to get touch and drag information on mobile, and multitouch will be available soon.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Can you get device rotation?</p>
+<ul>
+<li><strong>A:</strong> No API for it yet.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How do I install TS on a Mac?</p>
+<ul>
+<li><strong>A:</strong> The desktop editor is not supported on Mac, use the web editor at <a href="https://horizon.meta.com/creator/" target="_blank" rel="noopener noreferrer">https://horizon.meta.com/creator/</a> or a VM running Windows.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Is there an index of all the TypeScript API?</p>
+<ul>
+<li><strong>A:</strong>  <a href="https://horizon.meta.com/resources/scripting-api/" target="_blank" rel="noopener noreferrer">https://horizon.meta.com/resources/scripting-api/</a> and the d.ts files. VSCode has pop-up documentation when hovering over APIs.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  Is there anything similar to <code>setVisibilityForPlayers()</code> but for collidability?</p>
+<ul>
+<li><strong>A:</strong> No, you cannot set collision per player with current APIs/tools</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How can I force a player to exit a seat gizmo?</p>
+<ul>
+<li><strong>A:</strong> Not possible yet with current API.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Is there a TS equivalent to codeblock <code>server player</code>?</p>
+<ul>
+<li><strong>A:</strong> Use <code>this.world.getServerPlayer()</code> inside a component.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  How do I rotate a UI element?</p>
+<ul>
+<li><strong>A:</strong> Use UI/.../TransformStyle, no clear doc on it.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How to use NetworkEvent parameters?</p>
+<ul>
+<li><strong>A:</strong> Use an object rather than an array. <code>this.sendNetworkBroadcastEvent(gameEnd, {spawnLobby:this.props.spawnLobby})</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Can I use the thumbstick on mobile?</p>
+<ul>
+<li><strong>A:</strong> No, you need to use focused interaction mode and calculate touch values.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How do I use Object PPVs and PPV groups?</p>
+<ul>
+<li><strong>A:</strong> Use colons <code>:</code>. e.g. <code>TSPPVs:playerInfo</code> not dots <code>TSPPVs.playerInfo</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What is the difference between <code>AudioGizmo</code> vs <code>Sound Recorder Gizmo</code>?</p>
+<ul>
+<li><strong>A:</strong> A <code>SoundRecorderGizmo</code> is a subclass of <code>AudioGizmo</code>, there doesn't appear to be a specific TS API for it.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Is there a way to rename codeblocks outside of edit mode?</p>
+<ul>
+<li><strong>A:</strong> Yes, by saving it as a temp and re-importing with new name.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How do I make an object rotate smoothly over time?</p>
+<ul>
+<li><strong>A:</strong> Must calculate the correct rotation and duration over time and update every frame.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  If local scripts can't access PPVs, then how would I display a player's PPV data on their screen overlay UI using a script with execution to local?</p>
+<ul>
+<li><strong>A:</strong> You can have per-player bindings, or send a message from the local script to a default script to get info that can send to the local script for processing. Also locally scripted custom UI is visible only to the owner of the entity.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How can I get the camera to zoom or move in focused interaction mode?</p>
+<ul>
+<li><strong>A:</strong> Must use it in conjunction with the <code>attach camera api</code> you have to change the position and rotation offsets of the camera. Use a proxy object that acts like a dolly or an offset.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> I am getting this error "cannot instantiate missing TS component (scriptname)". Why?</p>
+<ul>
+<li><strong>A:</strong> Your script is likely not set to <code>local</code>, or has compilation errors.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  When an item is grabbed I am setting a camera view, but it says the <code>typescript</code> is missing.</p>
+<ul>
+<li><strong>A:</strong> Need to make the script <code>local</code>, and import the necessary module, as well as use the method <code>as()</code>, not the keyword <code>as</code>. <code>this.props.raycastEntity.as(hz.RaycastGizmo);</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Can you do a dig or axe animation on mobile and web without typescript?</p>
+<ul>
+<li><strong>A:</strong> You can simulate axe but not dig, and you can do this from codeblocks. Set sword pose and then fire animation.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  In Type Script, what is an EventSubscription?</p>
+<ul>
+<li><strong>A:</strong> It is what all the <code>connect*()</code> calls return, which you can use to <code>disconnect</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How to create a rotate by over time TS Utility reference</p>
+<ul>
+<li><strong>A:</strong> Needs to use the past and quaterion as an offset to compute destination. Rotate <em>To</em> takes in the final rotation, where as rotate <em>By</em> takes in the offset.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How can I get touch swipes in a custom UI on mobile?</p>
+<ul>
+<li><strong>A:</strong> You have to use the focused interaction mode on the custom UI element.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> I am getting this error : <code>Error: Exception encountered running bridge method 'SetLeaderboardScore': SetLeaderboardScore argument at position 1 was the server player, which is not supported in this method</code>.</p>
+<ul>
+<li><strong>A:</strong>  Use <code>this.world.getLocalPlayer()</code> to get the player that is running a specific local script. Make sure the script is local as well. Also <code>setScoreForPlayer</code> must get a player from the game not <code>serverplayer</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What is the purpose of <code>this.entity.owner.set(...)</code>?</p>
+<ul>
+<li><strong>A:</strong> It transfers the ownership of the current entity from the server or any other player, to the specific client mentioned. This means that when a local script is attached to the entity it will now run in the client headset, as opposed to the server.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  How can I create an object, and then set it's position and then add a collision box?</p>
+<ul>
+<li><strong>A:</strong>  you must declare an entity with motion type <code>animated</code> to move it via the <code>position.set()</code>. Also collision won't be detected if you move the object with transform functions and not by using physics.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How can I make a button that stays put?</p>
+<ul>
+<li><strong>A:</strong>  Set the object <code>PhysicalEntity.locked</code> property to <code>true</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How can I do multiple actions based on a single trigger?</p>
+<ul>
+<li><strong>A:</strong> You can use the action as a callback to other functions.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Why is my custom UI not updating?</p>
+<ul>
+<li><strong>A:</strong>  You probably are not using per-player bindings in your UI.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What is the best approach to setting up buttons?</p>
+<ul>
+<li><strong>A:</strong> Make one custom component with all required properties and link the props to multiple components.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  When should I use a LocalEvent and when should I use a NetworkEvent?</p>
+<ul>
+<li><strong>A:</strong> Use LocalEvent when communicating scripts in the same object and NetworkEvent for all communication across different devices.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> I get  Error Executing Script Module: Failed to load module 'redacted' being imported by 'HorizonRuntime'.</p>
+<ul>
+<li><strong>A:</strong> The editor may be set to an incorrect API version. Or you're not doing <code>class MyComponent extends Component&lt;typeof MyComponent&gt;</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  Can I access the camera position in focus mode?</p>
+<ul>
+<li><strong>A:</strong>  You can use the <code>localCamera</code> to get the camera position and rotation.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Is there a way to change the camera zoom in a UI with the mouse?</p>
+</li>
+<li>
+<p><strong>A:</strong> You have to use the <code>attachCamera</code> to add a reference to camera then you can adjust its position.</p>
+</li>
+<li>
+<p><strong>Q:</strong>  What's the right way to use <code>this.async.setTimeout</code></p>
+<ul>
+<li><strong>A:</strong>  Always make sure you save the variable into a different variable then you can clear the timer after or before the timeout. Always create a timer using <code>this.async.setTimeout(() =&gt; { /* timer function code here*/}, time)</code>, and clear it using <code>this.async.clearTimeout(timerId)</code> using the variable returned on setTimout.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> If a player leaves a world what happens to their local scripts?</p>
+<ul>
+<li><strong>A:</strong> You are not guaranteed to get an opportunity to run code in the local scripts when the player exits. Also the ownership will revert back to the server player.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Is there a way to prevent the player from looking into areas that are outside of the room?</p>
+<ul>
+<li><strong>A:</strong> You can add a trigger that pushes the player back into the room, if it is not an avatar specific feature. Or can add a double wall to prevent it, or block the avatar as a physics object with no gravitiy.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What does <code>object.bind(obj)</code> do?</p>
+<ul>
+<li><strong>A:</strong> It creates a new function that uses the given object as the this parameter.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>   How do I make a button that is a part of a canvas, and can also be clicked? *    <strong>A:</strong> It must be an interactive object to be clickable.</p>
+</li>
+<li>
+<p><strong>Q:</strong>  How can I get an animation from code to play only on the left hand?</p>
+<ul>
+<li><strong>A:</strong> The left hand currently can't be animated.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> I cannot get my code to run for my game controller</p>
+<ul>
+<li><strong>A:</strong> Make sure your local script is running with a proper owner other wise it's running on the server player, which is not allowed. Also make sure you have selected the correct trigger/object for the code to run on.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  I need to have a codeblock that will send data to a Typescript object. What are my options?</p>
+<ul>
+<li><strong>A:</strong>  You can create a <code>CodeBlockEvent</code> in TS, and use the proper syntax as specified in the API.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> I need to have a "sleep" command that can be cancelled in Typescript, How can I do that?</p>
+<ul>
+<li><strong>A:</strong> Instead of relying on <code>setTimeOut</code>, you need to capture a <code>timerId</code> and use that value to <code>clearTimeOut</code>, also the "sleep" function will still call other code inside the function after a time out if not designed to stop with a cancel parameter.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  Why does my code work in the desktop editor but when I use it in published it's doing something different</p>
+<ul>
+<li><strong>A:</strong>  Make sure your code is set to local or has the proper owner, also some of the functions on desktop, do not fully simulate what it does on headset. You should develop and test in the published world as much as possible.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  How do I implement an animation loop and transition between animations?</p>
+<ul>
+<li><strong>A:</strong> Create all animations in editor, then setup a system with a <code>onUpdate</code> event and set transition time to a value depending on what you need. You can use an enum for which state to use in your animation.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  Is there a way to set the intensity of VFX via TS script?</p>
+<ul>
+<li><strong>A:</strong>  Not currently possible via API, they have pre-programmed intensity.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Why doesn't my OnPlayerCollision fire after a teleport?</p>
+<ul>
+<li><strong>A:</strong>  You may be teleporting the player out of the trigger as soon as it collides with the trigger. You should try adding a slight delay to fix this. Collision events also fire multiple times. You may have to debounce or rate limit collision events by using a boolean or timer to limit it to one event fire.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Why does my object sometimes not detect the onCollision event</p>
+<ul>
+<li><strong>A:</strong> You must assign a physics material to the object. A collider must be a physics collider, and not an animated object.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How can I detect a hit with an animated object with raycasting?</p>
+<ul>
+<li><strong>A:</strong> Use a collider inside the animated object to detect collisions with a raycast.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Why does my <code>onPlayerEnterWorld</code> event not trigger when I press play in Desktop Editor?</p>
+<ul>
+<li><strong>A:</strong> This event should only fire on join and not when in play mode.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  How to import a JSON to read my game parameters?</p>
+<ul>
+<li><strong>A:</strong>  Import it as a <code>TextAsset</code> and the use <code>JSON.parse</code> to read it.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What do I do when a script wont let me set props?</p>
+<ul>
+<li><strong>A:</strong> Make sure you have the correct component declaration, such as <code>&lt;typeof MyComponent&gt;</code> which will help you create the correct props.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How do I make something a "draggable" object?</p>
+<ul>
+<li><strong>A:</strong>  Make the object "interactive" which is under its motion.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  How do I send a Network event, or a Local event to different clients?</p>
+<ul>
+<li><strong>A:</strong> You need to create it with the correct types. You can not send an array, but you can an Object or SerializableState. You also have to check for correct syntax and types for network messages (both sender and receiver) or it won't get through correctly.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How to create custom "lookAt" function?</p>
+<ul>
+<li><strong>A:</strong> The correct way is to use  <code>Quaternion.lookRotation</code> and pass it <code>target.sub(objectPosition)</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> I need to send a float variable to another script.</p>
+<ul>
+<li><strong>A:</strong> Use <code>new LocalEvent&lt;{ value: number }&gt;</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How do I move an object with a script over time without physics?</p>
+<ul>
+<li><strong>A:</strong> Use the <code>onUpdate</code> event to move it every frame.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Can I get device rotation with Typescript? * <strong>A:</strong>  No APIs available for mobile device rotation.</p>
+</li>
+<li>
+<p><strong>Q:</strong> How can I control the camera using typescript</p>
+<ul>
+<li><strong>A:</strong> The API for cameras are only available on the local clients.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Is it possible to force an avatar to always have an aim animation when using a pistol?</p>
+<ul>
+<li><strong>A:</strong> This is not possible, as there are limited animation available.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How can I move a camera forward in focused mode?</p>
+<ul>
+<li><strong>A:</strong> Use the "attach camera api" with a new variable representing the position of the camera</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What does it mean when a TS error says that it's not assignable to type 'SerializableState'?</p>
+<ul>
+<li><strong>A:</strong> You are trying to send data with Network Events that is not a standard JSON type. Check if your parameters are inside an object <code>{param1: "hello", param2: 1}</code> and not <code>["hello", 1]</code>, for array parameters, send one array with all the parameters inside or create a property that defines an object with the key that matches the one in your reciever.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Why are all my Typescript Properties not showing up?</p>
+<ul>
+<li><strong>A:</strong> you must use correct  syntax <code>static propsDefinition = { myProp : { type: PropTypes.Number } }</code> and you can not do any code logic within this object definition.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Why are my Objects with scripts that use Properties of type "number", "string" or "boolean" showing up as errors?</p>
+<ul>
+<li><strong>A:</strong>  You must set the correct syntax.  <code>static propsDefinition = { myString : { type: PropTypes.String }}</code>, and use lowercase types of <code>String, Number and Boolean</code>, and not the capitalized versions.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How to implement per player UI binding? * <strong>A:</strong> Use binding which allows you to set different values for a single property.</p>
+</li>
+<li>
+<p><strong>Q:</strong> How do you get code completion with TypeScript? * <strong>A:</strong> You have to have VS code open to edit the code, and be using the TS desktop editor or VS code. You do not get it from Microsoft Visual Studio.</p>
+</li>
+<li>
+<p><strong>Q:</strong> Can I disable system controls and take complete control of user input?</p>
+<ul>
+<li><strong>A:</strong> You can use new <code>PlayerInput</code> methods. <code>PlayerInput.disableSystemControls()</code> <code>PlayerInput.enableSystemControls()</code>, <code>PlayerInput.triggerInputActionDown()</code>, <code>PlayerInput.triggerInputActionUp()</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> I'm having a hard time with collision. What should I do?</p>
+<ul>
+<li><strong>A:</strong>  Try to use colliders that have the same shape and size as the asset.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How can I rotate an object around another object, and still rotate that object in space?</p>
+<ul>
+<li><strong>A:</strong> Use <code>Quaternion.mulVec3(myRotation, Vec3.forward)</code> in combination with setting position offset.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What's the difference between <code>this.entity.position</code> and <code>this.entity.transform.position.get()</code>?</p>
+<ul>
+<li><strong>A:</strong>  They return the same value. <code>entity.position</code> is shorter to write. You would use transform for local position or other <code>local</code> based properties.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  How do I make a button that stays put and does not get moved by grab interactions?</p>
+<ul>
+<li><strong>A:</strong> Set the object's <code>PhysicalEntity.locked</code> property to true. You may also want to force release on grab and return to original position, as the lock may not work perfectly.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  If a local script uses  <code>this.world.getLocalPlayer()</code> how do you set the owner of the object to the current player?</p>
+<ul>
+<li><strong>A:</strong> By transferring the ownership, you can access that value using the <code>this.world.getLocalPlayer()</code>. If it's set to the <code>serverplayer</code> that means the ownership did not move to the client running the local script.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How to dynamically apply a texture to a 3d object using Typescript?</p>
+<ul>
+<li><strong>A:</strong> Use <code>setTexture()</code> on an entity with <code>MeshEntity</code>, where you can change the texture. Make sure you use UIO material and not <code>_BR</code> materials.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Does <code>setCameraModeAttach()</code> need to be a local script?</p>
+<ul>
+<li><strong>A:</strong> Yes, all camera methods can only be called on the local client.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What does "disposableObject" mean in local events?</p>
+<ul>
+<li><strong>A:</strong> It is a design flaw in the v1 api that they fixed in v2.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How do I make an object visible to only one player?</p>
+<ul>
+<li><strong>A:</strong> You can do so by setting the ownership of the local script on the object to that player. Alternatively you can use  <code>entity.setVisibilityForPlayers([player], PlayerVisibilityMode.VisibleTo)</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What are the different ways to move an object in Type Script?</p>
+<ul>
+<li><strong>A:</strong>  Use <code>physics.push</code> or <code>physics.setVelocity()</code> if using physics, if not then you can change <code>entity.position.set()</code> for non-physics objects.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How can I make a UI Element appear in front of the player and then move the camera to look at it?</p>
+<ul>
+<li><strong>A:</strong> You can move a proxy object and set the camera offset from that object.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How to make a menu or list that is scrollable?</p>
+<ul>
+<li><strong>A:</strong> The default UI system does not support scrollable lists, you need to build a custom UI and code in that feature.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How to correctly use .then with a spawnAsset method?</p>
+<ul>
+<li><strong>A:</strong> spawnAsset always returns a promise array of entites, even if it only returns one.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Does a <code>this.world.spawnAsset().then()</code> callback execute the second it spawns?</p>
+<ul>
+<li><strong>A:</strong> No. You have to use <code>await</code> or <code>then</code> to get the values after they are spawned. The <code>.then</code> only triggers when the spawn operation has completed, and passes in the spawned asset for further manipulation.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Is there a <code>ClearTimeout</code> method for a sleep function</p>
+<ul>
+<li><strong>A:</strong> no you have to capture the timeID and clear it separately.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How do I apply a physics material to the player to simulate ice physics?</p>
+<ul>
+<li><strong>A:</strong> You cannot apply physics to a player directly, you must instead change the player locomotion to feel like they are skating with physics forces.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How to set up a codeblock event and listen to it from TS?</p>
+<ul>
+<li><strong>A:</strong> In TS define the <code>CodeBlockEvent</code> as: <code>static MyCodeBlockEvent = new CodeBlockEvent&lt;[paramType]&gt;('MyCodeBlockEvent', [PropType.String])</code> In CB make a "Send event to entity block" and send it to your component. Then listen to it using <code>this.connectCodeBlockEvent(this.entity, MyCodeBlockEvent,  (param) =&gt; { console.log("received")});</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How can I avoid duplicated collision events on object?</p>
+<ul>
+<li><strong>A:</strong> Add a bool value that defaults to false, then on a collision event set the value to true, then set a timer that will set the value back to false after a certain time. This way your code will only execute once for every new collision.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  Is it possible to use an arrow function as a type declaration in a LocalEvent?</p>
+<ul>
+<li><strong>A:</strong> No. They are not assignable to a <code>LocalEventData</code> type.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How to convert a local script to a default script?</p>
+<ul>
+<li><strong>A:</strong>   You cannot do that, you must create a new script in default mode, and copy your previous local script code.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  What is the "server player" for a local script?</p>
+<ul>
+<li><strong>A:</strong> Is a placeholder that runs all the default scripts, and if a local script is not assigned to a proper user, then the scripts run on this fake player.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  How can I access other entity properties in TS?</p>
+<ul>
+<li><strong>A:</strong> You can get them via <code>this.entity.properties</code> by calling the property, the property must be declared first in <code>propsDefinition</code> as a type <code>PropTypes.Entity</code> to access these objects. Or use the method <code>as()</code> as such <code>this.props.myObject.as(MyObjectType)</code>. You cannot get component from a different entity by name.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Is there a way to create a custom "lookAt" rotation method for my avatar?</p>
+<ul>
+<li><strong>A:</strong> No. You need a combination of <code>Quaternion.lookRotation</code> with a <code>Vec3</code> to get that rotation, and <code>setAvatarGripPoseOverride</code> to set the animation.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> If I use a method with async, does it also need to have async on the event connection?</p>
+<ul>
+<li><strong>A:</strong> No it does not.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> I want to display a value that might be null/undefined. What do I do?</p>
+<ul>
+<li><strong>A:</strong> Use the <code>?</code> conditional call, so the code is only executed when it is valid/defined. Such as:  <code>this.props.testValue?.toString();</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> I am having a issue with setting properties with a custom type in TypeScript.</p>
+<ul>
+<li><strong>A:</strong> You are setting the variable rather than using  the setter and getter of the Properties API. You must set it as such <code>this.myVariable.set(newValue)</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Why are my Textures not showing correctly?</p>
+<ul>
+<li><strong>A:</strong>   Make sure your texture material has the correct suffix (e.g., _UIO for custom UI)</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  Is there a way to get a random number in TS?</p>
+<ul>
+<li><strong>A:</strong> Use <code>Math.random()</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  Why do I get errors from <code>PlayerInput</code> in TS code?</p>
+<ul>
+<li><strong>A:</strong> Ensure you have created a DisposableObject variable first, and have included it in the definition as per the documentation.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What should the <code>preStart()</code> and <code>start()</code> methods do?</p>
+<ul>
+<li><strong>A:</strong> <code>preStart()</code> is called <em>before</em> the world loads. <code>start()</code> is called after a world loads.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How to get my custom object and reference properties of its components in other scripts using typescript?</p>
+<ul>
+<li><strong>A:</strong> You have to get the objects with <code>this.world.getEntitiesWithTags()</code> and then access the data via type casting <code>myobject.as(MyCustomObject).myProperty.get()</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How do I set the value of properties from the UI?</p>
+<ul>
+<li><strong>A:</strong> Using the static properties definitions on a component <code>static propsDefinition = { myBool : { type: PropTypes.Boolean, default: false } }</code></li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How do I change the color of a Trimesh object with code?</p>
+<ul>
+<li><strong>A:</strong> You must create a material with the UIO suffix and apply that material to the object to be able to change its color.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How can I use <code>setAvatarGripPoseOverride</code> for the left hand?</p>
+<ul>
+<li><strong>A:</strong> You can't, the left hand is only for visual representation.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What's the correct way to make an object follow me using Typescript?</p>
+<ul>
+<li><strong>A:</strong>  Use <code>this.world.getLocalPlayer()</code> and set the objects position with <code>this.entity.position.set()</code> in a onUpdate function.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Is there a way to make an object follow you and still move using Physics?</p>
+<ul>
+<li><strong>A:</strong> Use <code>entity.velocity.set()</code> in combination with <code>entity.forcePush()</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  I have a small script I'm attaching directly to an AudioGizmo and it works, but If I try the same thing with a Sound Recorder Gizmo I would imagine it would work; but it does not. Why?</p>
+<ul>
+<li><strong>A:</strong> The  <code>SoundRecorderGizmo</code>  is a subclass of <code>AudioGizmo</code> and not different, might be a bug and you should create a ticket.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Is it possible to have a codeblock to make an object follow you? * <strong>A:</strong> It is possible, and you can do so with an update method that changes the position of that object to the position of the player. You need to get the player position first using world.getLocalPlayer() and setting the world position of the object each frame.</p>
+</li>
+<li>
+<p><strong>Q:</strong> What is a 'gyroscope based looking around system'?</p>
+<ul>
+<li><strong>A:</strong>  Using your device orientation to navigate the camera. There is no API for this, file a feature request for phone orientation input.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How do I use NetworkEvent with an Entity parameter? *  <strong>A:</strong> You have to include the type in  an object: <code>sendNetworkBroadcastEvent(gameEnd, {spawnLobby: this.props.spawnLobby});</code></p>
+</li>
+<li>
+<p><strong>Q:</strong> I want to create a timer and cancel it on multiple occasions.</p>
+<ul>
+<li><strong>A:</strong> Create a promise and resolve it in the <code>setTimeOut</code> or cancel using <code>clearTimeout</code>. Return a promise object with the value on callback, and a cancel function.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Is there a feature request channel?</p>
+<ul>
+<li><strong>A:</strong>  Use  #🆘┃private-bug-reporting channel to request features.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What does <code>this.entity.as(hz.TextGizmo)</code> do?</p>
+<ul>
+<li><strong>A:</strong> It will cast/convert the entity to the TextGizmo so you can use the text property, must use it if you are trying to access other gizmos and cast them using <code>.as()</code>. You can chain them for complex objects, like <code>.as(Physics).as(Collider)</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> If local scripts can't access PPVs. Then how would I display a player's ppv data on their screen overlay UI using a script with execution to local?</p>
+<ul>
+<li><strong>A:</strong> You can have per-player bindings, or send a message from the local script to a default script to get info that can send to the local script for processing. Also locally scripted custom UI is visible only to the owner of the entity.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong>  How do I check collisions on animated objects</p>
+<ul>
+<li><strong>A:</strong> You must define a collision box for your objects, you can’t rely on an animation to trigger collisions</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What does “OnPlayerCollision” do and when is it called?</p>
+<ul>
+<li><strong>A:</strong> It's used to check when two collision objects touch each other, you need to set which type of objects it will track in the object parameters. This also sends several callbacks in the same frame when colliding.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> What is the type returned from the raycast?</p>
+<ul>
+<li><strong>A:</strong> It is a union type, you must check for the <code>hitResult.targetType</code> to see what object the raycast hit before you access the properties of it using casting.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> How do you find out where a script execution is running in Typescript?</p>
+<ul>
+<li><strong>A:</strong> Compare <code>this.world.getLocalPlayer()</code> with <code>this.world.getServerPlayer()</code>. If the Local Player equals the ServerPlayer, then it is running on server side, otherwise it's running on client side.</li>
+</ul>
+</li>
+<li>
+<p><strong>Q:</strong> Does anyone know how to make the NPC work from the asset library.</p>
+<ul>
+<li><strong>A:</strong> Look at the documentation for <code>AvatarAIAgent</code> at <a href="https://developers.meta.com/horizon-worlds/learn/documentation/desktop-editor/npcs/scripted-avatar-npcs/getting-started-with-scripted-avatar-npcs" target="_blank" rel="noopener noreferrer">https://developers.meta.com/horizon-worlds/learn/documentation/desktop-editor/npcs/scripted-avatar-npcs/getting-started-with-scripted-avatar-npcs</a></li>
+<li></li>
+</ul>
+</li>
+</ul>]]></content>
         <author>
-            <name>Sébastien Lorber</name>
-            <uri>https://sebastienlorber.com</uri>
+            <name>Johnathan</name>
+            <uri>jvastola.github.io</uri>
         </author>
-        <author>
-            <name>Yangshun Tay</name>
-            <uri>https://github.com/yangshun</uri>
-        </author>
-        <category label="Facebook" term="Facebook"/>
-        <category label="Hello" term="Hello"/>
-        <category label="Docusaurus" term="Docusaurus"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[MDX Blog Post]]></title>
-        <id>https://horizonworlds.wiki/blog/mdx-blog-post</id>
-        <link href="https://horizonworlds.wiki/blog/mdx-blog-post"/>
-        <updated>2021-08-01T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Blog posts support Docusaurus Markdown features, such as MDX.]]></summary>
-        <content type="html"><![CDATA[<p>Blog posts support <a href="https://docusaurus.io/docs/markdown-features" target="_blank" rel="noopener noreferrer">Docusaurus Markdown features</a>, such as <a href="https://mdxjs.com/" target="_blank" rel="noopener noreferrer">MDX</a>.</p>
-<div class="theme-admonition theme-admonition-tip admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>tip</div><div class="admonitionContent_BuS1"><p>Use the power of React to create interactive blog posts.</p></div></div>
-<!-- -->
-<p>For example, use JSX to create an interactive button:</p>
-<div class="language-js codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-js codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token operator" style="color:#393A34">&lt;</span><span class="token plain">button onClick</span><span class="token operator" style="color:#393A34">=</span><span class="token punctuation" style="color:#393A34">{</span><span class="token punctuation" style="color:#393A34">(</span><span class="token punctuation" style="color:#393A34">)</span><span class="token plain"> </span><span class="token arrow operator" style="color:#393A34">=&gt;</span><span class="token plain"> </span><span class="token function" style="color:#d73a49">alert</span><span class="token punctuation" style="color:#393A34">(</span><span class="token string" style="color:#e3116c">'button clicked!'</span><span class="token punctuation" style="color:#393A34">)</span><span class="token punctuation" style="color:#393A34">}</span><span class="token operator" style="color:#393A34">&gt;</span><span class="token maybe-class-name">Click</span><span class="token plain"> me</span><span class="token operator" style="color:#393A34">!</span><span class="token operator" style="color:#393A34">&lt;</span><span class="token operator" style="color:#393A34">/</span><span class="token plain">button</span><span class="token operator" style="color:#393A34">&gt;</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
-<button>Click me!</button>]]></content>
-        <author>
-            <name>Sébastien Lorber</name>
-            <uri>https://sebastienlorber.com</uri>
-        </author>
-        <category label="Docusaurus" term="Docusaurus"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Long Blog Post]]></title>
-        <id>https://horizonworlds.wiki/blog/long-blog-post</id>
-        <link href="https://horizonworlds.wiki/blog/long-blog-post"/>
-        <updated>2019-05-29T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[This is the summary of a very long blog post,]]></summary>
-        <content type="html"><![CDATA[<p>This is the summary of a very long blog post,</p>
-<p>Use a <code>&lt;!--</code> <code>truncate</code> <code>--&gt;</code> comment to limit blog post size in the list view.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>]]></content>
-        <author>
-            <name>Yangshun Tay</name>
-            <uri>https://github.com/yangshun</uri>
-        </author>
-        <category label="Hello" term="Hello"/>
-        <category label="Docusaurus" term="Docusaurus"/>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[First Blog Post]]></title>
-        <id>https://horizonworlds.wiki/blog/first-blog-post</id>
-        <link href="https://horizonworlds.wiki/blog/first-blog-post"/>
-        <updated>2019-05-28T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Lorem ipsum dolor sit amet...]]></summary>
-        <content type="html"><![CDATA[<p>Lorem ipsum dolor sit amet...</p>
-<p>...consectetur adipiscing elit. Pellentesque elementum dignissim ultricies. Fusce rhoncus ipsum tempor eros aliquam consequat. Lorem ipsum dolor sit amet</p>]]></content>
-        <author>
-            <name>Sébastien Lorber</name>
-            <uri>https://sebastienlorber.com</uri>
-        </author>
-        <author>
-            <name>Yangshun Tay</name>
-            <uri>https://github.com/yangshun</uri>
-        </author>
-        <category label="Hola" term="Hola"/>
-        <category label="Docusaurus" term="Docusaurus"/>
+        <category label="Typescript" term="Typescript"/>
+        <category label="FAQ" term="FAQ"/>
     </entry>
 </feed>
