@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkhorizonworlds=self.webpackChunkhorizonworlds||[]).push([[472],{5513:e=>{e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Meta Horizon Worlds TypeScript FAQ","permalink":"/blog/typescript-faq","unlisted":false,"date":"2025-01-02T00:00:00.000Z"}]}')}}]);

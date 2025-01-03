@@ -9,8 +9,8 @@
     <icon>https://horizonworlds.wiki/img/favicon.ico</icon>
     <entry>
         <title type="html"><![CDATA[Meta Horizon Worlds TypeScript FAQ]]></title>
-        <id>https://horizonworlds.wiki/blog/typescript-faq</id>
-        <link href="https://horizonworlds.wiki/blog/typescript-faq"/>
+        <id>https://horizonworlds.wiki/blog/typescript-faqs</id>
+        <link href="https://horizonworlds.wiki/blog/typescript-faqs"/>
         <updated>2025-01-02T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[I. Getting Started & Setup]]></summary>
         <content type="html"><![CDATA[<p><strong>I. Getting Started &amp; Setup</strong></p>
